@@ -1,12 +1,24 @@
 const express = require('express'); //Import the express dependency
 const Flutterwave = require('flutterwave-node-v3');
-const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
+const flw = new Flutterwave("FLWPUBK-3bec00ca4193d7168e8998302ba96f9d-X", "FLWSECK-2e9b5cbf550cfc9a1b964c8ea62446e5-18dd0390594vt-X");
 const app = express();              //Instantiate an express app, the main work horse of this server
 const port = 5000;                  //Save the port number where your server will be listening
 
 //Idiomatic expression in express to route and respond to a client request
 app.get('/', async (req, res) => {        //get requests to the root ("/") will route here
   let request = req.query;
+  if(!request["tx_ref"] || !request["amount"] || !request["currency"] || !request["country"] || !request["number"] || !request["fullname"] ){
+    res.send({
+      status : "error",
+      error : "data incomplete"
+    })
+    console.log({
+      status : "error",
+      error : "data incomplete"
+    });
+
+    return
+  }
   try {
     const payload = {
       "tx_ref": request["tx_ref"],
