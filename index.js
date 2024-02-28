@@ -29,7 +29,7 @@ app.get('/api/collect', async (req, res) => {
   try {
     const payload = {
       "tx_ref": request["tx_ref"],
-      "amount": 50, //request["amount"],
+      "amount": request["amount"],
       "currency": request["currency"],
       "country": request["country"],
       "email": request["email"],
@@ -103,7 +103,7 @@ app.get('/api/send', async (req, res) => {
       "account_number": request.number,
       "amount": request.amount,
       "narration": "retrait de Shaku Minning Investment",
-      "currency": "XAF",
+      "currency": request.currency,
       "reference": request.tx_ref,
       "beneficiary_name": request.fullname
     };
