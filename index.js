@@ -37,7 +37,8 @@ app.get('/api/collect', async (req, res) => {
       "fullname": request["fullname"],
     }
     let response = {};
-    response = flw.MobileMoney.franco_phone(payload)
+    response = await flw.MobileMoney.franco_phone(payload)
+    response.payload = payload;
     res.send(response)
   } catch (error) {
     res.send({
