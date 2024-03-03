@@ -127,7 +127,7 @@ app.get('/api/send', async (req, res) => {
 //SEND MAIL
 app.get('/api/mail/send', async (req, res) => {
   let request = req.query;
-  if (!request.messages) {
+  if (!request.messages || !request.key || !request.sec_key) {
     res.send({ status: "error", error: "data incomplete", data: request })
 
     console.log({ status: "error", error: "data incomplete", data: request });
@@ -135,8 +135,8 @@ app.get('/api/mail/send', async (req, res) => {
   }
   try {
     const mailjet = Mailjet.apiConnect(
-      "14b4540b8fe91bffc56181aa6edb7732",
-      "02ea79e9d4d72684000a6f624e2c324c"
+      request.key,
+      request.sec_key
     );
     const requestmailjet = mailjet
       .post('send', { version: 'v3.1' })
