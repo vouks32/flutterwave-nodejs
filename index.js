@@ -145,6 +145,7 @@ app.get('/api/mail/send', async (req, res) => {
       })
 
     requestmailjet.then((result) => {
+      result.body.payload = request.messages;
       res.send(result.body)
     }).catch((err) => {
       res.send({
